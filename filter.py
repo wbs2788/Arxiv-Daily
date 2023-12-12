@@ -30,10 +30,14 @@ def show_paper():
         paper = papers[paper_index[0]]
         paper['abstract'] = paper['abstract'].replace('\n', '')
         text.delete('1.0', tk.END)
+        
         text.tag_configure('header', font=('Arial', 14, 'bold'), spacing1=10, spacing3=10)
         text.tag_configure('subheader', font=('Arial', 12, 'bold'), spacing1=5, spacing3=5)
-        text.tag_configure('content', font=('Arial', 12), spacing1=5, spacing3=5, lmargin1=20, lmargin2=20, rmargin=10)
-        text.tag_configure('abstract', font=('Arial', 12), spacing1=5, spacing2=8, spacing3=5, lmargin1=20, lmargin2=20, rmargin=10)
+        text.tag_configure('content', font=('Arial', 12), spacing1=5, spacing3=5, lmargin1=20, \
+                           lmargin2=20, rmargin=10)
+        text.tag_configure('abstract', font=('Arial', 12), spacing1=5, spacing2=8, spacing3=5, \
+                           lmargin1=20, lmargin2=20, rmargin=10)
+        
         text.insert(tk.END, "Title:\n", 'header')
         text.insert(tk.END, f"{paper['title']}\n", 'content')
         text.insert(tk.END, "\nAuthors:\n", 'subheader')
@@ -67,13 +71,16 @@ text.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
 button_frame = tk.Frame(root)
 button_frame.pack(pady=10, fill=tk.X)
 
-keep_button = tk.Button(button_frame, text="Save (↑)", command=keep_paper, width=15, height=2, bg="lightgreen")
+keep_button = tk.Button(button_frame, text="Save (↑)", command=keep_paper, \
+                        width=15, height=2, bg="lightgreen")
 keep_button.pack(side=tk.LEFT, padx=10)
 
-skip_button = tk.Button(button_frame, text="Skip (→)", command=skip_paper, width=15, height=2, bg="lightcoral")
+skip_button = tk.Button(button_frame, text="Skip (→)", command=skip_paper, \
+                        width=15, height=2, bg="lightcoral")
 skip_button.pack(side=tk.LEFT, padx=10)
 
-save_button = tk.Button(button_frame, text="Get The Result", command=save_results, width=15, height=2, bg="lightblue", state=tk.DISABLED)
+save_button = tk.Button(button_frame, text="Get The Result", command=save_results, \
+                        width=15, height=2, bg="lightblue", state=tk.DISABLED)
 save_button.pack(side=tk.LEFT, padx=10)
 
 root.bind('<Right>', skip_paper)
