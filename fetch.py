@@ -1,7 +1,7 @@
 '''
 Author: wbs2788
 Date: 2023-12-12 08:31:06
-LastEditTime: 2023-12-12 09:08:31
+LastEditTime: 2023-12-12 15:11:36
 LastEditors: wbs2788
 Description: 
 FilePath: \Arxiv-Daily\fetch.py
@@ -44,7 +44,7 @@ def fetch_papers(categories, max_results=200):
     return papers
 
 # Fetch recent papers
-recent_papers = set(fetch_papers(categories))
+recent_papers = fetch_papers(categories)
 print(f'Papers num: {len(recent_papers)}, Dates: {dates}')
 with open(f'papers/papers{today}.json', 'w', encoding='utf-8') as file:
     json.dump(recent_papers, file, ensure_ascii=False, indent=4)
