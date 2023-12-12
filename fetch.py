@@ -1,13 +1,22 @@
+'''
+Author: wbs2788
+Date: 2023-12-12 08:31:06
+LastEditTime: 2023-12-12 09:08:31
+LastEditors: wbs2788
+Description: 
+FilePath: \Arxiv-Daily\fetch.py
+
+'''
 from datetime import date, timedelta
 import arxiv
 import json
 
 # Define the categories to search in arXiv
-categories = ['cs.LG', 'cs.MM', 'cs.AI', 'cs.CV', 'cs.SD']
+categories = ['cs.LG', 'cs.MM', 'cs.AI', 'cs.CV', 'cs.SD'] # You should change here
 
-# Define today's and yesterday's dates
+# Get dates
 today = date.today()
-interval = 4
+interval = 2
 hoshiidate = [today - timedelta(days=i) for i in range(interval)]
 print(f'Crawling date {hoshiidate}')
 dates = set()
