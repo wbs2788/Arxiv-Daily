@@ -6,10 +6,16 @@ from ttkbootstrap import Style
 import requests
 import os
 import threading
+from wordcloud import WordCloud, STOPWORDS
+import matplotlib.pyplot as plt
+from PIL import Image, ImageTk
+import io
+from stopword import AI_STOPWORDS
 
 # Define today's and yesterday's dates
 today = date.today()
-papers_filepath = f'papers/papers{today}.json'  # Path of data file
+papers_filepath = f'papers/papers2023-12-12.json'  # Path of data file
+selected_papers = []
 
 with open(papers_filepath, 'r', encoding='utf-8') as file:
     papers = json.load(file)[:10]
@@ -28,8 +34,17 @@ remaining_label.pack()
 def update_remaining_label():
     remaining_count = len(papers) - paper_index[0]
     remaining_label.config(text=f"Remaining: {remaining_count}/{len(papers)}")
-    
-selected_papers = []
+
+def generate_wordcloud_from_file(filepath):
+    with open(filepath, 'r', encoding='utf-8') as file:
+        papers = json.load(file)
+    all_abstracts = " ".join(paper['title'] for paper in papers)
+    STOPWORDS.update(AI_STOPWORDS)
+    wordcloud = WordCloud(width=800, height=400, background_color ='white',\
+                          stopwords=STOPWORDS).generate(all_abstracts)
+    return wordcloud.to_image()
+
+
 
 def show_paper():
     if paper_index[0] < len(papers):
@@ -115,6 +130,15 @@ def save_results():
         json.dump(selected_papers, file, ensure_ascii=False, indent=4)
     messagebox.showinfo("save", "The result has been saved!")
 
+def start_filtering():
+    wordcloud_label.pack_forget()
+    start_button.pack_forget()
+
+    text.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
+    button_frame.pack(pady=10, fill=tk.X)
+    remaining_label.pack()
+    show_paper()
+
 text = scrolledtext.ScrolledText(root, height=30, width=120, wrap=tk.WORD, padx=10, pady=10)
 text.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
 
@@ -142,5 +166,19 @@ root.bind('<Up>', keep_paper)
 root.bind('<Down>', collect_paper)
 
 show_paper()
+
+wordcloud_image = generate_wordcloud_from_file(papers_filepath)
+image = ImageTk.PhotoImage(wordcloud_image)
+
+wordcloud_label = tk.Label(root, image=image)
+wordcloud_label.pack(pady=10)
+wordcloud_label.image = image
+
+start_button = tk.Button(root, text="Start Filting", command=start_filtering)
+start_button.pack(pady=20)
+
+text.pack_forget()
+button_frame.pack_forget()
+remaining_label.pack_forget()
 
 root.mainloop()

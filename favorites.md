@@ -118,3 +118,23 @@ We present W.A.L.T, a transformer-based approach for photorealistic videogenerat
 
 ---
 
+# Information theory for model reduction in stochastic dynamical systems
+
+## Authors
+Matthew S. Schmitt, Maciej Koch-Janusz, Michel Fruchart, Daniel S. Seara, Vincenzo Vitelli
+
+## Abstract
+Model reduction is the construction of simple yet predictive descriptions ofthe dynamics of many-body systems in terms of a few relevant variables. Aprerequisite to model reduction is the identification of these relevantvariables, a task for which no general method exists. Here, we develop asystematic approach based on the information bottleneck to identify therelevant variables, defined as those most predictive of the future. Weelucidate analytically the relation between these relevant variables and theeigenfunctions of the transfer operator describing the dynamics. Further, weshow that in the limit of high compression, the relevant variables are directlydetermined by the slowest-decaying eigenfunctions. Our information-basedapproach indicates when to optimally stop increasing the complexity of thereduced model. Further, it provides a firm foundation to constructinterpretable deep learning tools that perform model reduction. We illustratehow these tools work on benchmark dynamical systems and deploy them onuncurated datasets, such as satellite movies of atmospheric flows downloadeddirectly from YouTube.
+
+---
+
+# Mitigating Perspective Distortion-induced Shape Ambiguity in Image Crops
+
+## Authors
+Aditya Prakash, Arjun Gupta, Saurabh Gupta
+
+## Abstract
+Objects undergo varying amounts of perspective distortion as they move acrossa camera's field of view. Models for predicting 3D from a single image oftenwork with crops around the object of interest and ignore the location of theobject in the camera's field of view. We note that ignoring this locationinformation further exaggerates the inherent ambiguity in making 3D inferencesfrom 2D images and can prevent models from even fitting to the training data.To mitigate this ambiguity, we propose Intrinsics-Aware Positional Encoding(KPE), which incorporates information about the location of crops in the imageand camera intrinsics. Experiments on three popular 3D-from-a-single-imagebenchmarks: depth prediction on NYU, 3D object detection on KITTI & nuScenes,and predicting 3D shapes of articulated objects on ARCTIC, show the benefits ofKPE.
+
+---
+
