@@ -35,12 +35,12 @@ def update_remaining_label():
     remaining_count = len(papers) - paper_index[0]
     remaining_label.config(text=f"Remaining: {remaining_count}/{len(papers)}")
 
-def generate_wordcloud_from_file(filepath):
+def generate_wordcloud_from(filepath, key):
     with open(filepath, 'r', encoding='utf-8') as file:
         papers = json.load(file)
-    all_abstracts = " ".join(paper['title'] for paper in papers)
+    all_abstracts = " ".join(paper[key] for paper in papers)
     STOPWORDS.update(AI_STOPWORDS)
-    wordcloud = WordCloud(width=800, height=400, background_color ='white',\
+    wordcloud = WordCloud(width=800, height=300, background_color ='white',\
                           stopwords=STOPWORDS).generate(all_abstracts)
     return wordcloud.to_image()
 
@@ -131,7 +131,8 @@ def save_results():
     messagebox.showinfo("save", "The result has been saved!")
 
 def start_filtering():
-    wordcloud_label.pack_forget()
+    title_wordcloud_label.pack_forget()
+    abstract_wordcloud_label.pack_forget()
     start_button.pack_forget()
 
     text.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
@@ -167,12 +168,17 @@ root.bind('<Down>', collect_paper)
 
 show_paper()
 
-wordcloud_image = generate_wordcloud_from_file(papers_filepath)
-image = ImageTk.PhotoImage(wordcloud_image)
+title_wordcloud_image = generate_wordcloud_from(papers_filepath, 'title')
+title_image = ImageTk.PhotoImage(title_wordcloud_image)
+title_wordcloud_label = tk.Label(root, image=title_image)
+title_wordcloud_label.pack(pady=10)
+title_wordcloud_label.image = title_image
 
-wordcloud_label = tk.Label(root, image=image)
-wordcloud_label.pack(pady=10)
-wordcloud_label.image = image
+abstract_wordcloud_image = generate_wordcloud_from(papers_filepath, 'abstract')
+abstract_image = ImageTk.PhotoImage(abstract_wordcloud_image)
+abstract_wordcloud_label = tk.Label(root, image=abstract_image)
+abstract_wordcloud_label.pack(pady=10)
+abstract_wordcloud_label.image = abstract_image
 
 start_button = tk.Button(root, text="Start Filting", command=start_filtering)
 start_button.pack(pady=20)
