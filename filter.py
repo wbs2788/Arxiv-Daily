@@ -14,11 +14,11 @@ from stopword import AI_STOPWORDS
 
 # Define today's and yesterday's dates
 today = date.today()
-papers_filepath = f'papers/papers2023-12-12.json'  # Path of data file
+papers_filepath = f'papers/papers2023-12-13.json'  # Path of data file
 selected_papers = []
 
 with open(papers_filepath, 'r', encoding='utf-8') as file:
-    papers = json.load(file)[:10]
+    papers = json.load(file)
 
 root = tk.Tk()
 root.title("Paper Filter")

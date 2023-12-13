@@ -91,5 +91,6 @@ AI_STOPWORDS = {
     'explication', 'explications', 'illustrate', 'illustrating', 'illustration', 'illustrations',
     'demonstrate', 'demonstrating', 'demonstration', 'demonstrations', 'exemplify', 'exemplifying',
     'exemplification', 'exemplifications', 'represent', 'representing', 'representation', 'representations',
-    'depict', 'depicting', 'depiction', 'depictions', 'image', 'based', 'using', 'images', 'AI', 'via', 'text'
+    'depict', 'depicting', 'depiction', 'depictions', 'image', 'based', 'using', 'images', 'AI', 'via', 'text',
+    'training', 'propose', 'introduce', 'existing', 'http', 'github', 'without'
 }
