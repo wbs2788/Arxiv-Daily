@@ -1,4 +1,5 @@
 import json
+import datetime
 from datetime import date, timedelta
 import tkinter as tk
 from tkinter import messagebox, scrolledtext, ttk
@@ -14,7 +15,7 @@ from stopword import AI_STOPWORDS
 
 # Define today's and yesterday's dates
 today = date.today()
-papers_filepath = f'papers/papers2023-12-13.json'  # Path of data file
+papers_filepath = f'papers/selected_papers_2023-12-13.json'  # Path of data file
 selected_papers = []
 
 with open(papers_filepath, 'r', encoding='utf-8') as file:
@@ -49,7 +50,7 @@ def generate_wordcloud_from(filepath, key):
 def show_paper():
     if paper_index[0] < len(papers):
         paper = papers[paper_index[0]]
-        paper['abstract'] = paper['abstract'].replace('\n', '')
+        paper['abstract'] = paper['abstract'].replace('\n', ' ')
         text.delete('1.0', tk.END)
 
         text.tag_configure('header', font=('Arial', 14, 'bold'), spacing1=10, spacing3=10)
@@ -89,6 +90,11 @@ def download_paper(paper, progress_bar):
             progress_bar['maximum'] = total_size
             if not os.path.exists(os.path.join('downloads', str(today))):
                 os.mkdir(os.path.join('downloads', str(today)))
+            title = paper['title']
+            sanitized_title = ''.join([c if c.isalnum() or c in [' ', '_', '-'] else '_' for c in title])
+            today = datetime.today().strftime('%Y-%m-%d')
+            pdf_path = os.path.join('downloads', today, sanitized_title + '.pdf')
+            os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
             pdf_path = os.path.join('downloads', str(today), \
                                 paper['title'].replace('/', '_') + '.pdf') 
             with open(pdf_path, 'wb') as f:
@@ -126,7 +132,7 @@ def skip_paper(event=None):
         show_paper()
 
 def save_results():
-    with open(f'papers/selected_papers_{today}.json', 'w', encoding='utf-8') as file:
+    with open(f'{today}.json', 'w', encoding='utf-8') as file:
         json.dump(selected_papers, file, ensure_ascii=False, indent=4)
     messagebox.showinfo("save", "The result has been saved!")
 
