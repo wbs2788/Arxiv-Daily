@@ -80,6 +80,7 @@ def save_markdown(paper):
 
 def download_paper(paper, progress_bar):
     pdf_url = paper['link']
+    pdf_url:str
     try:
         with requests.get(pdf_url, stream=True) as r:
             r.raise_for_status()
@@ -90,10 +91,8 @@ def download_paper(paper, progress_bar):
             progress_bar['maximum'] = total_size
             if not os.path.exists(os.path.join('downloads', str(today))):
                 os.mkdir(os.path.join('downloads', str(today)))
-            title = paper['title']
-            sanitized_title = ''.join([c if c.isalnum() or c in [' ', '_', '-'] else '_' for c in title])
-            today = datetime.today().strftime('%Y-%m-%d')
-            pdf_path = os.path.join('downloads', today, sanitized_title + '.pdf')
+            sanitized_title = pdf_url.split('/')[-1]
+            pdf_path = os.path.join('downloads', str(today), sanitized_title + '.pdf')
             os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
             pdf_path = os.path.join('downloads', str(today), \
                                 paper['title'].replace('/', '_') + '.pdf') 
